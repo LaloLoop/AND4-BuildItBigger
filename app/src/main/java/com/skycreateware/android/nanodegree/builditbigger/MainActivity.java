@@ -1,5 +1,6 @@
 package com.skycreateware.android.nanodegree.builditbigger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.skycreateware.android.nanodegree.builditbigger.lib.JokeSource;
+import com.skycreateware.android.nanodegree.builditbigger.lib.jokeview.JokeActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,10 +47,9 @@ public class MainActivity extends AppCompatActivity {
     public void tellJoke(View view) {
         JokeSource jokeSource = new JokeSource();
 
-        Toast.makeText(
-                this,
-                jokeSource.getJoke(),
-                Toast.LENGTH_SHORT)
-                .show();
+        Intent intent = new Intent(this, JokeActivity.class);
+        intent.putExtra(JokeActivity.JOKE_EXTRA, jokeSource.getJoke());
+
+        startActivity(intent);
     }
 }
