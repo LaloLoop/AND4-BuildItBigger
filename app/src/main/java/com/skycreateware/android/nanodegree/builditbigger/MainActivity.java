@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.skycreateware.android.nanodegree.builditbigger.lib.JokeSource;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -41,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
+        JokeSource jokeSource = new JokeSource();
+
         Toast.makeText(
                 this,
-                "This is no joke, I am not implemented, yet!",
+                jokeSource.getJoke(),
                 Toast.LENGTH_SHORT)
                 .show();
     }
