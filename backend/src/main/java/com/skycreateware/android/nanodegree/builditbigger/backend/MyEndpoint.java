@@ -9,6 +9,7 @@ package com.skycreateware.android.nanodegree.builditbigger.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.skycreateware.android.nanodegree.builditbigger.lib.JokeSource;
 
 import javax.inject.Named;
 
@@ -29,6 +30,18 @@ public class MyEndpoint {
     public MyBean sayHi(@Named("name") String name) {
         MyBean response = new MyBean();
         response.setData("Hi, " + name);
+
+        return response;
+    }
+
+    /** Method to get jokes from this endpoint using JokeSource library **/
+    @ApiMethod(name = "tellJoke")
+    public MyBean tellJoke() {
+        MyBean response = new MyBean();
+
+        JokeSource jokeSource = new JokeSource();
+
+        response.setData(jokeSource.getJoke());
 
         return response;
     }

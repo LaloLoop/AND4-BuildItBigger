@@ -1,18 +1,20 @@
 package com.skycreateware.android.nanodegree.builditbigger;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.skycreateware.android.nanodegree.builditbigger.lib.JokeSource;
+import com.skycreateware.android.nanodegree.builditbigger.backend.myApi.MyApi;
 import com.skycreateware.android.nanodegree.builditbigger.lib.jokeview.JokeActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EndpointAsyncTask.OnJokeReceived{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +46,26 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Click handler to process "Tell Joke" button.
+     */
     public void tellJoke(View view) {
-        JokeSource jokeSource = new JokeSource();
+        new EndpointAsyncTask().execute(this);
+    }
 
+    /**
+     * Called to show an activity passing a joke as an extra.
+     * @param joke  Joke to show on activity.
+     */
+    public void launchJokeActivity (String joke) {
         Intent intent = new Intent(this, JokeActivity.class);
-        intent.putExtra(JokeActivity.JOKE_EXTRA, jokeSource.getJoke());
+        intent.putExtra(JokeActivity.JOKE_EXTRA, joke);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onJokeReceived(String joke) {
+        launchJokeActivity(joke);
     }
 }
