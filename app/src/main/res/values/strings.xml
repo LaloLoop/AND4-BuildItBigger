@@ -9,6 +9,4 @@
     <string name="intruction_text">Press the button for a delicious joke!</string>
     <string name="tell_joke_button">Tell Joke</string>
 
-    <!-- Testing Ad unit ID -->
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
