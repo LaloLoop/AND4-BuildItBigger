@@ -18,9 +18,8 @@ import java.io.IOException;
 /**
  * Async Task used to retreive jokes from our endpoint.
  */
-class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
+class EndpointAsyncTask extends AsyncTask<EndpointAsyncTask.OnJokeReceived, Void, String> {
     private static MyApi myApiService = null;
-    private Context mContext;
     private OnJokeReceived mListener;
 
     public interface OnJokeReceived {
@@ -28,7 +27,7 @@ class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Context... params) {
+    protected String doInBackground(EndpointAsyncTask.OnJokeReceived... params) {
         if (myApiService == null) {
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -48,13 +47,7 @@ class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
             myApiService = builder.build();
         }
 
-        try {
-            mListener = (OnJokeReceived) params[0];
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Context must implement " + OnJokeReceived.class.getSimpleName());
-        }
-
-        mContext = params[0];
+        mListener = params[0];
 
         try {
             return myApiService.tellJoke().execute().getData();
