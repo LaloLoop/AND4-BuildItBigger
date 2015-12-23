@@ -7,10 +7,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.skycreateware.android.nanodegree.builditbigger.lib.jokeview.JokeActivity;
 
-public class MainActivity extends AppCompatActivity implements EndpointAsyncTask.OnJokeReceived{
+public class MainActivity extends AppCompatActivity implements EndpointAsyncTask.OnJokeReceived,
+    OnFragmentViewReady{
+    private Button mTellJokeButton;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,17 @@ public class MainActivity extends AppCompatActivity implements EndpointAsyncTask
      * Click handler to process "Tell Joke" button.
      */
     public void tellJoke(View view) {
+        showLoadingView(true);
         new EndpointAsyncTask().execute(this);
+    }
+
+    /**
+     * Enables / Disables the loading view.
+     * @param show  True if the loading view should be presented.
+     */
+    private void showLoadingView(boolean show) {
+        mTellJokeButton.setEnabled(!show);
+        mProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -62,6 +77,13 @@ public class MainActivity extends AppCompatActivity implements EndpointAsyncTask
 
     @Override
     public void onJokeReceived(String joke) {
+        showLoadingView(false);
         launchJokeActivity(joke);
+    }
+
+    @Override
+    public void onFragmentViewReady() {
+        mTellJokeButton = (Button) findViewById(R.id.tellJokeButton);
+        mProgressBar = (ProgressBar) findViewById(R.id.loadingJokeBar);
     }
 }
