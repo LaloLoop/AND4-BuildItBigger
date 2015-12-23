@@ -17,15 +17,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        free {
+            applicationId "com.skycreateware.android.nanodegree.builditbigger.free"
+        }
+        paid {
+            applicationId "com.skycreateware.android.nanodegree.builditbigger.paid"
+        }
+    }
 }
 
 dependencies {
+    // Local libs
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    // Testing deps
     testCompile 'junit:junit:4.12'
+    // Android library to visualize jokes
     compile project(':jokeview')
+    // Support libraries
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     // Ads support
-    compile 'com.google.android.gms:play-services-ads:8.3.0'
+    freeCompile 'com.google.android.gms:play-services-ads:8.3.0'
+    // GCE dependency
     compile project(path: ':backend', configuration: 'android-endpoints')
 }
