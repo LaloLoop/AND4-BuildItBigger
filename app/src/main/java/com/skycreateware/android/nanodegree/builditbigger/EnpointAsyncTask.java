@@ -34,7 +34,7 @@ class EndpointAsyncTask extends AsyncTask<EndpointAsyncTask.OnJokeReceived, Void
                 // Setting up local server IP. Set your local server or local server if in
                 // emulator.
                 // - 10.0.2.2 is localhost-s IP address in Android emulator.
-                .setRootUrl("http://192.168.1.220:8080/_ah/api/")
+                .setRootUrl("http://192.168.1.65:8080/_ah/api/")
                 // Disable gzip compression on devappserver
                 .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
